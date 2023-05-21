@@ -7,7 +7,7 @@ import os
 import sys
 import time
 import json
-
+from time import sleep
 import dbus
 
 from .controller import ControllerServer
@@ -314,7 +314,7 @@ class Nxbt():
                 "macro": macro,
                 "macro_id": macro_id,
             }
-        })
+            })
         elif repeat == -1 : 
             print("Runnung marco forever! Using Ctrl+C to stop")
             while(True):
@@ -324,11 +324,14 @@ class Nxbt():
                     "controller_index": controller_index,
                     "macro": macro,
                     "macro_id": macro_id,
-                }
-        })
+                }    
+                })
+                time.sleep(10)
+            
         else : 
             print(f"Repeat macro times : {repeat}")
             for i in range(repeat):
+                print(f"macro repeat {i+1} / {repeat}")
                 self.task_queue.put({
                 "command": NxbtCommands.INPUT_MACRO,
                 "arguments": {
@@ -336,7 +339,8 @@ class Nxbt():
                     "macro": macro,
                     "macro_id": macro_id,
                 }
-        })
+                })
+                time.sleep(5)
 
 
         if block:

@@ -271,7 +271,7 @@ def macro():
     if args.commandinit:
         if os.path.isfile(args.commandinit):
             with open(args.commandinit, "r") as f:
-                # macro_init = f.read()
+                macro_init = f.read()
                 print('macro_init:\n' + macro_init)
         else:
             macro_init = args.commandinit
