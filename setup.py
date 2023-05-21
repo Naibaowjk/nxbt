@@ -1,7 +1,9 @@
 from setuptools import setup
 
 setup(
-    name="nxbt",
+    name="nxbt-naibaoofficial",
+    version='1.0.0',
+    description='nxbt marco enhanced by naibaooffical',
     include_package_data=True,
     long_description_content_type="text/markdown",
     install_requires=[
@@ -13,6 +15,8 @@ setup(
         "pynput==1.7.1",
         "psutil==5.6.6",
         "cryptography==3.3.2",
+        "jinja2==3.0.3",
+        "Werkzeug==2.0.2"
     ],
     extra_require={
         "dev": [

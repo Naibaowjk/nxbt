@@ -232,7 +232,7 @@ class Nxbt():
         try:
             while True:
                 try:
-                    msg = task_queue.get(timeout=5)
+                    msg = task_queue.get(timeout=50)
                 except queue.Empty:
                     msg = None
 
@@ -266,7 +266,7 @@ class Nxbt():
             cm.shutdown()
             sys.exit(0)
 
-    def macro(self, controller_index, macro, block=True):
+    def macro(self, controller_index, macro, macro_init, repeat, block=True):
         """Used to input a given macro on a specified controller.
         This is done by creating and passing an INPUT_MACRO
         message into the task queue with the given macro.
@@ -301,10 +301,43 @@ class Nxbt():
             "command": NxbtCommands.INPUT_MACRO,
             "arguments": {
                 "controller_index": controller_index,
+                "macro": macro_init,
+                "macro_id": macro_id,
+            }
+        })
+        if repeat == 0 or repeat == 1: 
+            print("Only run macro once!")
+            self.task_queue.put({
+            "command": NxbtCommands.INPUT_MACRO,
+            "arguments": {
+                "controller_index": controller_index,
                 "macro": macro,
                 "macro_id": macro_id,
             }
         })
+        elif repeat == -1 : 
+            print("Runnung marco forever! Using Ctrl+C to stop")
+            while(True):
+                self.task_queue.put({
+                "command": NxbtCommands.INPUT_MACRO,
+                "arguments": {
+                    "controller_index": controller_index,
+                    "macro": macro,
+                    "macro_id": macro_id,
+                }
+        })
+        else : 
+            print(f"Repeat macro times : {repeat}")
+            for i in range(repeat):
+                self.task_queue.put({
+                "command": NxbtCommands.INPUT_MACRO,
+                "arguments": {
+                    "controller_index": controller_index,
+                    "macro": macro,
+                    "macro_id": macro_id,
+                }
+        })
+
 
         if block:
             while True:

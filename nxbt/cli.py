@@ -51,7 +51,13 @@ parser.add_argument('--usessl', required=False, default=False, action='store_tru
 parser.add_argument('--certpath', required=False, default=None, type=str,
                     help="""Specifies the folder location for SSL certificates used
                     in the webapp. Certificates in this folder should be in the form of
-                    a 'cert.pem' and 'key.pem' pair.""")                
+                    a 'cert.pem' and 'key.pem' pair.""")
+parser.add_argument('--repeat', required=False, default=0, type=int,
+                    help="""Setting repeat times for macro. Defaults to 0, '-1' means forever""")
+parser.add_argument('--commandinit', required=False, default=False,
+                    help="""Used in conjunction with the macro command init. Specifies a
+                    macro string or a file location to load a macro string from. This co
+                    mmand will not repeat, u can use for back game to start macro rightly""")          
 args = parser.parse_args()
 
 
@@ -260,6 +266,21 @@ def macro():
     """
 
     macro = None
+    macro_init = None 
+    repeat = args.repeat
+    if args.commandinit:
+        if os.path.isfile(args.commandinit):
+            with open(args.commandinit, "r") as f:
+                # macro_init = f.read()
+                print('macro_init:\n' + macro_init)
+        else:
+            macro_init = args.commandinit
+    
+    else:
+        print("No macro commands init were specified.")
+        print("Please use the --commandinit argument to specify a macro string or a file location")
+        print("to load a macro string from.")
+        return
     if args.commands:
         if os.path.isfile(args.commands):
             with open(args.commands, "r") as f:
@@ -284,9 +305,10 @@ def macro():
     print("Waiting for connection...")
     nx.wait_for_connection(index)
     print("Connected!")
-
+    print("check NS status!")
+    sleep(5)
     print("Running macro...")
-    macro_id = nx.macro(index, macro, block=False)
+    macro_id = nx.macro(index, macro, macro_init, repeat, block=False)
     while (True):
         if nx.state[index]["state"] == "crashed":
             print("Controller crashed while running macro")
