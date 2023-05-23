@@ -378,6 +378,9 @@ class InputParser():
             # Upper Byte
             if button == "Y":
                 upper[7] = '1'
+            elif button == "YB":
+                upper[7] = '1'
+                upper[5] = '1'
             elif button == "X":
                 upper[6] = '1'
             elif button == "B":
