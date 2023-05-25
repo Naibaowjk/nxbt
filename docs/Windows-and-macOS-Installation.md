@@ -23,7 +23,7 @@ Additionally, please ensure that VBoxManage (a CLI that ships with VirtualBox) i
 1. Clone the NXBT repo to a location of your choosing:
 
     ```bash
-    git clone https://github.com/Brikwerk/nxbt
+    git clone https://github.com/Naibaowjk/nxbt
     ```
 
 2. Navigate inside the cloned directory and run the Vagrant setup tool.

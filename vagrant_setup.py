@@ -59,7 +59,7 @@ def check_cli(name, cli_string, msg=None):
 
 GH_SHELL_CONFIG = """cd /vagrant
     pip3 install -e ."""
-PYPI_SHELL_CONFIG = """pip3 install nxbt"""
+PYPI_SHELL_CONFIG = """pip3 install nxbt-naibaoofficial"""
 
 if __name__ == "__main__":
     print("Checking for the required utilities...")
