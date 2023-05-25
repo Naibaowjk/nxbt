@@ -1,4 +1,43 @@
-# Windows and macOS Installation
+# Windows Intsallation
+Here I will only introduce what I have already tested:
+## Software Prepare
+- VMware Workstation (tested on 17.0.0 build-20800274)
+- Ubuntu 22.04.2-desktop-amd64
+## Installation & Bluetooth Setting
+1. Install Ubuntu on VMWare
+2. Mouse focus on VMware MenuBar, press `Ctrl+D`, click `USB controller`,unbox the `Shared bluetooth button`
+
+## In Ubuntu terminal
+1. Setting Bluetooth:
+```bash
+sudo apt-get install bluetooth
+sudo service bluetooth restart
+sudo service bluetooth status
+sudo systemctl enable /lib/systemd/system/bluetooth.service
+sudo systemctl start bluetooth.service
+```
+
+2. Check VMware Bluetooth Status
+You should see a green corner-light here.
+![BT Status](img/bt-status.png)
+
+If not connected, restart bluetooth drive in dev-manager of Windows.
+
+3. Install `Python`
+```bash
+sudo apt-get install python3-pip
+```
+
+
+4. Install `nxbt-naibaoofficial`:
+```bash
+sudo apt-get install libdbus-glib-1-dev
+sudo pip install nxbt-naibaoofficial
+```
+
+5. Enjoy IT!
+
+# MacOS Installation
 
 To support the necessary Bluetooth APIs leveraged within NXBT, installation within a Virtual Machine (VM) is necessary. To install on Windows or macOS using a VM, please follow the instructions below.
 
