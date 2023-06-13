@@ -26,7 +26,10 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/Brikwerk/nxbt/master/docs/img/nxbt-example.png)
+![screenshot](https://raw.githubusercontent.com/Naibaowjk/nxbt/master/docs/img/nxbt-example.png)
+
+## Important
+**This program is based on Brikwerk's nxbt project for secondary development, in order to respect the original author, I did not modify all the copyright information in the documentation, only the necessary places to make changes to the documentation.**
 
 ## Key Features
 
@@ -34,18 +37,18 @@
 - Use your terminal to control a Nintendo Switch with a keyboard.
 - Use a macro from your terminal, browser, or Python script
 - Use the NXBT Python API to write programs to control your Nintendo Switch.
-- Primitive loop support in macros.
 - In-depth command line interface.
 - Support for emulating multiple controllers at once.
 - Support for fast connection or reconnection to a Nintendo Switch.
 - Emulated ontrollers support thread-safe access.
+- ** Use macro in loop, support automacic go back to game and press 'YB' together.
 
 ## Installation
 
 ### Linux
 
 ```bash
-sudo pip3 install nxbt
+sudo pip3 install nxbt-naibaoofficial
 ```
 
 **Please Note:** NXBT needs root privileges to toggle the BlueZ Input plugin. If you're not comfortable running this program as root, you can disable the Input plugin manually, and install NXBT as a regular user.
@@ -185,6 +188,76 @@ If you want more information on NXBT's CLI arguments:
 ```bash
 sudo nxbt -h
 ```
+
+Here is my version help info
+```bash
+$ sudo nxbt macro -h
+  -h, --help            show this help message and exit
+  -c COMMANDS, --commands COMMANDS
+                        Used in conjunction with the macro command. Specifies a macro string or a file location to load a macro string from.
+  -r, --reconnect       Used in conjunction with the macro or tui command. If specified, nxbt will attmept to reconnect to any previously connected Nintendo Switch.
+  -a ADDRESS, --address ADDRESS
+                        Used in conjunction with the macro or tui command. If specified, nxbt will attmept to reconnect to a specific Bluetooth MAC address of a Nintendo Switch.
+  -d, --debug           Enables debug mode in nxbt.
+  -l, --logfile         Enables logging to a file in the current working directory instead of stderr.
+  -i IP, --ip IP        Specifies the IP to run the webapp at. Defaults to 0.0.0.0
+  -p PORT, --port PORT  Specifies the port to run the webapp at. Defaults to 8000
+  --usessl              Enables or disables SSL use in the webapp
+  --certpath CERTPATH   Specifies the folder location for SSL certificates used in the webapp. Certificates in this folder should be in the form of a 'cert.pem' and 'key.pem' pair.
+  --repeat REPEAT       Setting repeat times for macro. Defaults to 0, '-1' means forever
+  --commandinit COMMANDINIT
+                        Used in conjunction with the macro command init. Specifies a macro string or a file location to load a macro string from. This co mmand will not repeat, u can use for back game to start macro rightly
+```
+
+Using macro command to auto go back game and start macro loop:
+```bash
+$ sudo nxbt macro -c "macro-02.txt" --commandinit "macro-init.txt" --repeat -1
+$ cat macro-init
+ZR 0.1S
+0.3S
+DPAD_UP 0.2S
+1S
+PLUS 0.2S
+0.3S
+DPAD_LEFT 0.1S
+0.1S
+A 0.1S
+0.1S
+DPAD_DOWN 0.1S
+0.1S
+A 0.1S
+0.1S
+DPAD_RIGHT 0.1S
+0.1S
+A 0.1S
+0.1S
+A 0.1S
+0.6S
+PLUS 0.05S
+0.08S
+PLUS 0.05S
+0.3S
+DPAD_LEFT 0.1S
+0.2S
+A 0.1S
+0.2S
+DPAD_DOWN 0.1S
+0.2S
+A 0.1S
+0.3S
+B 0.1S
+0.3S
+L_STICK@+000+100 0.1S
+0.3S
+A 0.1S
+0.1S
+A 0.1S
+0.1S
+L_STICK@+000-100 0.1S
+```
+
+```
+
 
 ### Running Macros with the Python API
 
