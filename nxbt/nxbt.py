@@ -9,6 +9,7 @@ import time
 import json
 from time import sleep
 import dbus
+import re
 
 from .controller import ControllerServer
 from .controller import ControllerTypes
@@ -330,6 +331,10 @@ class Nxbt():
             
         else : 
             print(f"Repeat macro times : {repeat}")
+            pattern = r"(\d+(\.\d+)?)(?=S)"
+            seconds = re.findall(pattern, macro)
+            total_time = sum(float(sec[0]) for sec in seconds)
+            print(f"One macro cost {total_time} seconds.")
             for i in range(repeat):
                 print(f"macro repeat {i+1} / {repeat}")
                 self.task_queue.put({
@@ -340,7 +345,7 @@ class Nxbt():
                     "macro_id": macro_id,
                 }
                 })
-                time.sleep(5)
+                time.sleep(total_time + 1)
 
 
         if block:
